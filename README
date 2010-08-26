@@ -1,0 +1,26 @@
+================
+Monitcall README
+================
+
+Monitcall is a small script to run executeables and
+watch for deadlocks in the process.
+
+Usage: monitcall [-h] [-a ARGS] [-t CYCLES] [-l LIMIT] [-s SIGNAL]
+                 [-d DEBUGLOG] [-v] cmd
+
+The script will call the given command (CMD) together with the
+given arguments (ARGS). If the CPU usage of the command is higher
+than the given limit (LIMIT) for more than CYCLES cycles
+the command is killed with the signal SIGNAL.
+
+Example:
+monitcall wvWare -a '-c utf-8 --nographics mydocument.doc'
+
+Extracts the contents of the MS-Word document `mydocument.doc` to
+an utf-8 text printed on stdout.
+
+Known issues:
+  - The option string must not start with `-a`. Like this:
+
+    ... -a '-a 4 -c utf-8 ...'
+    This seems to be a bug in the argparse module

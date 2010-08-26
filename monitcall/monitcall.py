@@ -2,7 +2,7 @@
 """ monitcall.py - Call and monitor executables for cpu blocks
 
     usage:
-    usage: monitcall [-h] [-a ARGS] [-t CYCLES] [-l LIMIT] [-s SIGNAL]
+    usage: monitcall.py [-h] [-a ARGS] [-t CYCLES] [-l LIMIT] [-s SIGNAL]
                      [-d DEBUGLOG] [-v] cmd
 
     The script will call the given command (CMD) together with the

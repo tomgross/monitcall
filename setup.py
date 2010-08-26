@@ -2,6 +2,8 @@
 
 from setuptools import setup, find_packages
 
+README = open('README').read().strip()
+
 setup(
     name="monitcall",
     license="ZPL 2.1",
@@ -12,8 +14,7 @@ setup(
     maintainer_email="itconsense@gmail.com",
     url="",
     packages=find_packages(),
-    long_description="""Monitcall is a program to run executeables and
- watch for deadlocks in the process.""",
+    long_description=README,
     zip_safe=True,
     install_requires=['psutil', 'argparse'],
     entry_points={
