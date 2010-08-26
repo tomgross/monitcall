@@ -10,9 +10,8 @@ setup(
     version="0.2",
     description="Call and monitor executables",
     author="Tom Gross",
-    maintainer="Tom Gross",
-    maintainer_email="itconsense@gmail.com",
-    url="",
+    author_email="itconsense@gmail.com",
+    url="http://github.com/tomgross/monitcall",
     packages=find_packages(),
     long_description=README,
     zip_safe=True,
@@ -21,7 +20,7 @@ setup(
         'console_scripts': [
             'monitcall = monitcall.monitcall:main']},
     classifiers=[
-        "Development Status :: 4 - Beta"
+        "Development Status :: 4 - Beta",
         "Environment :: Console",
         "Intended Audience :: System Administrators",
         "License :: OSI Approved :: Zope Public License",
