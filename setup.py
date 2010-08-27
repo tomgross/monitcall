@@ -21,7 +21,7 @@ setup(
     test_suite = 'monitcall.tests.test_suite',
     entry_points={
         'console_scripts': [
-            'monitcall = monitcall.monitcall:main']},
+            'monitcall = monitcall:main']},
     classifiers=[
         "Development Status :: 4 - Beta",
         "Environment :: Console",
