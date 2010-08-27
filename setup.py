@@ -2,7 +2,9 @@
 
 from setuptools import setup, find_packages
 
-README = open('README').read().strip()
+long_description = '\n'.join([
+   open('README').read().strip()
+   open('CHANGES').read().strip()])
 
 setup(
     name="monitcall",
@@ -13,7 +15,7 @@ setup(
     author_email="itconsense@gmail.com",
     url="http://github.com/tomgross/monitcall",
     packages=find_packages(),
-    long_description=README,
+    long_description=long_description,
     zip_safe=True,
     install_requires=['psutil', 'argparse'],
     tests_requires=['psutil'],

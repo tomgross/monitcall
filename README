@@ -16,7 +16,7 @@ than the given limit (LIMIT) for more than CYCLES cycles
 the command is killed with the signal SIGNAL.
 
 Example:
---------
+========
 
 To extract the contents of a MS-Word document `mydocument.doc` to
 an utf-8 text printed on stdout call: ::
@@ -24,7 +24,8 @@ an utf-8 text printed on stdout call: ::
   monitcall wvWare -a '-c utf-8 --nographics mydocument.doc'
 
 Known issues:
--------------
+=============
+
  - The argument string must not start with `-a`. Like this: ::
 
       ... -a '-a 4 -c utf-8 ...'
