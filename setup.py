@@ -16,6 +16,8 @@ setup(
     long_description=README,
     zip_safe=True,
     install_requires=['psutil', 'argparse'],
+    tests_requires=['psutil'],
+    test_suite = 'monitcall.tests.test_suite',
     entry_points={
         'console_scripts': [
             'monitcall = monitcall.monitcall:main']},

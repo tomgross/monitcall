@@ -36,6 +36,11 @@ from subprocess import Popen, PIPE
 import psutil
 import argparse
 
+
+logger = logging.getLogger('Monitcall')
+logger.setLevel(logging.INFO)
+
+
 class Monit(threading.Thread):
 
     killed = False
@@ -76,14 +81,15 @@ class Monit(threading.Thread):
         self._stopevent.set()
         threading.Thread.join(self, timeout)
 
+
 class Call(threading.Thread):
 
     pid = 0
     result = ''
 
-    def __init__(self, cmd, opts):
+    def __init__(self, cmd, args):
         threading.Thread.__init__(self)
-        self.cmd = ' '.join([cmd, opts])
+        self.cmd = ' '.join([cmd, args])
 
     def run(self):
         self.p = Popen(self.cmd, stdout=PIPE, shell=True)
@@ -93,7 +99,8 @@ class Call(threading.Thread):
         threading.Thread.join(self, timeout)
         self.result = self.p.communicate()[0]
 
-def main():
+
+def parse_args():
     # Handle arguments
     parser = argparse.ArgumentParser(
         description="Call an executable in noblocking mode")
@@ -111,22 +118,12 @@ def main():
     parser.add_argument('-v', '--verbose', default=False,
                         action='store_true',
                         help='Be more verbose')
-    args = parser.parse_args()
+    return parser.parse_args()
 
-    # Setup logging, if in verbose mode:
-    if args.debuglog:
-        logger = logging.getLogger('Monitcall')
-        logger.setLevel(logging.INFO)
-        try:
-            handler = logging.handlers.RotatingFileHandler(args.debuglog)
-            logger.addHandler(handler)
-        except (IOError, OSError), e:
-            sys.stderr.write("Couldn't open logfile: %s (%s). No log available\n" %
-                             (args.debuglog, e))
 
-    # Do the payload
+def execute(args):
     # Start command thread
-    c = Call(args.cmd, args.opts)
+    c = Call(args.cmd, args.args)
     c.start()
 
     # Wait until a PID is available
@@ -146,9 +143,28 @@ def main():
         now = datetime.datetime.utcnow()
         logger.info('[%s] "%s" failed. Debug output: %s' % (
             now.strftime('%Y-%m-%d %H:%M:%S'), args.cmd, stripped_result[:100]))
+    return c.result
+
+
+def main():
+    # Parse commandline arguments
+    args = parse_args()
+
+    # Setup logging, if in verbose mode:
+    if args.debuglog:
+        try:
+            handler = logging.handlers.RotatingFileHandler(args.debuglog)
+            logger.addHandler(handler)
+        except (IOError, OSError):
+            e = sys.exc_info()[1]
+            sys.stderr.write("Couldn't open logfile: %s (%s). No log available\n" %
+                             (args.debuglog, e))
+
+    # Do the payload
+    result = execute(args)
 
     # Print stdout of command
-    sys.stdout.write(c.result)
+    sys.stdout.write(result)
 
 if __name__ == '__main__':
      main()
