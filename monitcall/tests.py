@@ -1,12 +1,14 @@
-import unittest
+import os.path
+import re
 import StringIO
 import sys
-import re
+import unittest
 
 from monitcall import execute
 
 
 CPUPAT = re.compile("cpu at level ([0-9.]*) pass ([0-9]*)")
+
 
 class DummyArgs(object):
 
@@ -28,7 +30,7 @@ class MonitcallTests(unittest.TestCase):
     def test_exit(self):
         args = DummyArgs()
         args.cmd = 'python'
-        args.args = 'endless.py'
+        args.args = os.path.join(os.path.dirname(__file__), 'endless.py')
         args.verbose = True
         out = StringIO.StringIO()
         sys.stderr = out
