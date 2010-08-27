@@ -9,7 +9,7 @@ long_description = '\n\n'.join([
 setup(
     name="monitcall",
     license="ZPL 2.1",
-    version="0.3",
+    version="0.3.1",
     description="Call and monitor executables",
     author="Tom Gross",
     author_email="itconsense@gmail.com",
